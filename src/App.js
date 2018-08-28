@@ -28,6 +28,7 @@ class App extends Component {
     this.onPosYChange = this.onPosYChange.bind(this);
     this.onHeightChange = this.onHeightChange.bind(this);
     this.onCardChange = this.onCardChange.bind(this);
+    this.createCard = this.createCard.bind(this);
   }
 
   componentWillMount() {
@@ -147,7 +148,7 @@ class App extends Component {
     );
   }
 
-  createCard(x) {
+  renderCard(x) {
     return (
       <CardElement
         key={`card-${x}`}
@@ -162,18 +163,29 @@ class App extends Component {
     );
   }
 
+  createCard(x) {
+    this.setState({
+      ["width-" + x]: 10,
+      ["height-" + x]: 2,
+      ["posx-" + x]: 3,
+      ["posy-" + x]: 2,
+      ["color-" + x]: x,
+      cardCount: this.state.cards.length + 1
+    });
+  }
+
   render() {
     let cards = [];
     let menus = [];
 
     for (let x = 0; x < this.state.cardCount; x++) {
       menus.push(this.createMenu(x));
-      cards.push(this.createCard(x));
+      cards.push(this.renderCard(x));
     }
 
     // for (let x = 0 + this.state.cards.length; x < this.state.cardCount; x++) {
     //   menus.push(this.createMenu(x));
-    //   cards.push(this.createCard(x));
+    //   cards.push(this.renderCard(x));
     // }
 
     return (
@@ -192,18 +204,7 @@ class App extends Component {
             </span>
             <button
               onClick={() => {
-                this.setState(prevState => {
-                  return {
-                    cards: [
-                      ...prevState.cards,
-                      this.createCard(prevState.cards.length)
-                    ],
-                    menus: [
-                      ...prevState.menus,
-                      this.createMenu(prevState.menus.length)
-                    ]
-                  };
-                });
+                this.createCard(this.state.cardCount);
               }}
               className="bg-blue hover:bg-blue-light text-white font-bold py-2 px-4 border-b-4 border-blue-dark hover:border-blue rounded"
             >
