@@ -144,6 +144,15 @@ class App extends Component {
           onChange={e => this.onPosYChange(x, e)}
           handle={this.handle}
         />
+        <br />
+        <button
+          onClick={() => {
+            this.createCard(this.state.cardCount);
+          }}
+          className="bg-red hover:bg-red-light text-white  py-2 px-4 border-b-4 border-red-dark hover:border-red rounded"
+        >
+          Remove card
+        </button>
       </div>
     );
   }

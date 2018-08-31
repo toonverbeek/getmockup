@@ -21,17 +21,17 @@ class CardElement extends Component {
         ? colors[10 - this.props.color]
         : colors[this.props.color];
 
-    let x, y, height, width;
-    ({ x, y, height, width } = this.props);
+    const { x, y, height, width } = this.props;
+
+    //grid-row-start / grid-col-start / grid-row-end / grid-col-end
+    const gridArea = `${y}/${x}/${y + height}/${x + width}`;
 
     return (
       <div
         className={`${
           this.props.selected ? "border-2 border-black resize" : ""
         } bg-${color}-lightest bg-grey-lightest cursor-pointer`}
-        style={{
-          gridArea: `${y}/${x} / ${y + height}/${x + width}` //grid-row-start / grid-col-start / grid-row-end / grid-col-end
-        }}
+        style={{ gridArea }}
         onClick={this.props.onClick}
       />
     );
