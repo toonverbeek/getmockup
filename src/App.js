@@ -186,11 +186,6 @@ class App extends Component {
       cards.push(this.renderCard(x));
     }
 
-    // for (let x = 0 + this.state.cards.length; x < this.state.cardCount; x++) {
-    //   menus.push(this.createMenu(x));
-    //   cards.push(this.renderCard(x));
-    // }
-
     return (
       <div className="App">
         {this.state.showSidebar && (
@@ -214,16 +209,6 @@ class App extends Component {
               Create card
             </button>
             <br />
-            <br />
-            <br />
-            {/* <b>Total cards</b>
-            <Slider
-              min={0}
-              max={20}
-              defaultValue={this.state.cardCount}
-              onChange={this.onCardChange}
-              handle={this.handle}
-            /> */}
             {menus}
           </div>
         )}
