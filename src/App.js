@@ -37,13 +37,13 @@ class App extends Component {
     if (this.state.createFromTemplate) {
       this.setState({
         ["width-" + 1]: 10,
-        ["height-" + 1]: 2,
+        ["height-" + 1]: 1,
         ["width-" + 2]: 10,
-        ["height-" + 2]: 9,
+        ["height-" + 2]: 10,
         ["posx-" + 1]: 3,
         ["posy-" + 1]: 2,
         ["posx-" + 2]: 3,
-        ["posy-" + 1]: 2,
+        ["posy-" + 2]: 3,
         ["color-" + 1]: 1,
         ["color-" + 2]: 2,
         cardCount: 3
