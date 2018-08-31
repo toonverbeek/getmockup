@@ -164,13 +164,16 @@ class App extends Component {
   }
 
   createCard(x) {
-    this.setState({
-      ["width-" + x]: 10,
-      ["height-" + x]: 2,
-      ["posx-" + x]: 3,
-      ["posy-" + x]: 2,
-      ["color-" + x]: x,
-      cardCount: this.state.cards.length + 1
+    this.setState(prevState => {
+      return {
+        ["width-" + x]: 10,
+        ["height-" + x]: 2,
+        ["posx-" + x]: 3,
+        ["posy-" + x]: 2,
+        ["color-" + x]: x,
+        cardCount: prevState.cardCount + 1,
+        ["visible-" + x]: true
+      };
     });
   }
 
