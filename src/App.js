@@ -2,75 +2,65 @@ import React, { Component } from "react";
 import "./App.css";
 import Slider from "rc-slider";
 import Tooltip from "rc-tooltip";
-
 import "rc-slider/assets/index.css";
+import Select from "react-select";
 
 import CardElement from "./components/elements/card";
+
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      "width-0": 2,
-      "posx-0": 1,
-      "posy-0": 2,
-      "height-0": 13,
-      "visible-0": false,
-      cardCount: 3,
-      createFromTemplate: true,
+      createFromTemplate: false,
       showSidebar: true,
-      cards: [],
-      menus: []
+      elements: [],
+      deltaPosition: { x: 0, y: 0 }
     };
 
-    this.onChange = this.onChange.bind(this);
-    this.onPosXChange = this.onPosXChange.bind(this);
-    this.onPosYChange = this.onPosYChange.bind(this);
-    this.onHeightChange = this.onHeightChange.bind(this);
-    this.onCardChange = this.onCardChange.bind(this);
+    this.onPropChange = this.onPropChange.bind(this);
+
     this.createCard = this.createCard.bind(this);
   }
 
   componentWillMount() {
-    let cards = [];
-    let menus = [];
     if (this.state.createFromTemplate) {
+      const newCard0 = {
+        width: 2,
+        posx: 1,
+        posy: 2,
+        height: 13,
+        color: 0,
+        selected: false
+      };
+      const newCard = {
+        width: 10,
+        height: 1,
+        posx: 3,
+        posy: 2,
+        color: 1,
+        selected: false
+      };
+      const newCard2 = {
+        width: 10,
+        height: 10,
+        posx: 3,
+        posy: 3,
+        color: 2,
+        selected: false
+      };
+
       this.setState({
-        ["width-" + 1]: 10,
-        ["height-" + 1]: 1,
-        ["width-" + 2]: 10,
-        ["height-" + 2]: 10,
-        ["posx-" + 1]: 3,
-        ["posy-" + 1]: 2,
-        ["posx-" + 2]: 3,
-        ["posy-" + 2]: 3,
-        ["color-" + 1]: 1,
-        ["color-" + 2]: 2,
-        cardCount: 3
+        elements: [newCard0, newCard, newCard2],
+        menus: [this.createMenu(0), this.createMenu(1), this.createMenu(2)]
       });
-      menus.push(this.createMenu(0), this.createMenu(1), this.createMenu(2));
     }
-    this.setState({ menus, cards });
   }
 
-  onChange(x, width) {
-    this.setState({ ["width-" + x]: width });
-  }
-
-  onPosXChange(x, pos) {
-    this.setState({ ["posx-" + x]: pos });
-  }
-
-  onPosYChange(x, pos) {
-    this.setState({ ["posy-" + x]: pos });
-  }
-
-  onHeightChange(x, height) {
-    this.setState({ ["height-" + x]: height });
-  }
-
-  onCardChange(cardCount) {
-    this.setState({ cardCount });
+  onPropChange(id, propName, val) {
+    let elements = [...this.state.elements];
+    elements[id][propName] = val;
+    this.setState({ elements });
   }
 
   handle(props) {
@@ -91,110 +81,130 @@ class App extends Component {
   }
 
   onCardClick(id) {
-    this.setState(prevState => {
-      return {
-        ["visible-" + id]: !prevState["visible-" + id],
-        showSidebar: true
-      };
-    });
+    let elements = [...this.state.elements];
+    elements[id].selected = !elements[id].selected;
+    this.setState({ elements, showSidebar: true });
   }
 
   createMenu(x) {
-    return (
-      <div
-        key={`menu-${x}`}
-        className={`${
-          this.state[`visible-` + x] ? "visible" : "hidden"
-        } border-b-4 p-4 border-grey`}
-      >
-        <h2>Card {x + 1}</h2>
-        <br />
-        <b>Width</b>
-        <Slider
-          min={1}
-          max={12}
-          defaultValue={4}
-          onChange={e => this.onChange(x, e)}
-          handle={this.handle}
-        />
-        <br />
-        <b>Height</b>
-        <Slider
-          min={1}
-          max={13}
-          defaultValue={5}
-          onChange={e => this.onHeightChange(x, e)}
-          handle={this.handle}
-        />
-        <br />
-        <b>Pos x</b>
-        <Slider
-          min={1}
-          max={13}
-          defaultValue={2}
-          onChange={e => this.onPosXChange(x, e)}
-          handle={this.handle}
-        />
-        <br />
-        <b>Pos y</b>
-        <Slider
-          min={2}
-          max={13}
-          defaultValue={2}
-          onChange={e => this.onPosYChange(x, e)}
-          handle={this.handle}
-        />
-        <br />
-        <button
-          onClick={() => {
-            this.createCard(this.state.cardCount);
-          }}
-          className="bg-red hover:bg-red-light text-white  py-2 px-4 border-b-4 border-red-dark hover:border-red rounded"
+    if (this.state.elements.length > 0) {
+      const options = [
+        { value: "white", label: "white" },
+        { value: "grey", label: "grey" },
+        { value: "red", label: "red" },
+        { value: "orange", label: "orange" },
+        { value: "green", label: "green" },
+        { value: "teal", label: "teal" },
+        { value: "blue", label: "blue" },
+        { value: "indigo", label: "indigo" },
+        { value: "purple", label: "purple" },
+        { value: "pink", label: "pink" }
+      ];
+
+      return (
+        <div
+          key={`menu-${x}`}
+          className={`${
+            this.state.elements[x].selected ? "visible" : "hidden"
+          } border-b-4 p-4 border-grey`}
         >
-          Remove card
-        </button>
-      </div>
-    );
+          <h2>Card {x + 1}</h2>
+          <br />
+          <b>Width</b>
+          <Slider
+            min={1}
+            max={12}
+            defaultValue={4}
+            onChange={e => this.onPropChange(x, "width", e)}
+            handle={this.handle}
+          />
+          <br />
+          <b>Height</b>
+          <Slider
+            min={1}
+            max={13}
+            defaultValue={5}
+            onChange={e => this.onPropChange(x, "height", e)}
+            handle={this.handle}
+          />
+          <br />
+          <b>Pos x</b>
+          <Slider
+            min={1}
+            max={13}
+            defaultValue={2}
+            onChange={e => this.onPropChange(x, "posx", e)}
+            handle={this.handle}
+          />
+          <br />
+          <b>Pos y</b>
+          <Slider
+            min={2}
+            max={13}
+            defaultValue={2}
+            onChange={e => this.onPropChange(x, "posy", e)}
+            handle={this.handle}
+          />
+          <br />
+          <button
+            onClick={() => {
+              console.log("remove");
+            }}
+            className="bg-red hover:bg-red-light text-white  py-2 px-4 border-b-4 border-red-dark hover:border-red rounded"
+          >
+            Remove card
+          </button>
+          <br />
+          <Select
+            value={this.state.selectedOption}
+            onChange={selectedOption =>
+              this.onPropChange(x, "color", selectedOption.value)
+            }
+            options={options}
+          />
+        </div>
+      );
+    }
   }
 
-  renderCard(x) {
+  renderCard(cardType, x) {
     return (
       <CardElement
         key={`card-${x}`}
-        width={this.state[`width-${x}`]}
-        height={this.state[`height-${x}`]}
-        x={this.state[`posx-${x}`]}
-        y={this.state[`posy-${x}`]}
+        circle={cardType === "circle"}
+        width={this.state.elements[x].width}
+        height={this.state.elements[x].height}
         onClick={e => this.onCardClick(x, e)}
-        selected={this.state[`visible-${x}`]}
-        color={x}
+        selected={this.state.elements[x].selected}
+        color={this.state.elements[x].color}
       />
     );
   }
 
-  createCard(x) {
+  createCard(cardType, x) {
+    const card = {
+      type: cardType,
+      width: 5,
+      height: 5,
+      posx: 120,
+      posy: 120,
+      color: "white",
+      selected: true
+    };
+
     this.setState(prevState => {
-      return {
-        ["width-" + x]: 10,
-        ["height-" + x]: 2,
-        ["posx-" + x]: 3,
-        ["posy-" + x]: 2,
-        ["color-" + x]: x,
-        cardCount: prevState.cardCount + 1,
-        ["visible-" + x]: true
-      };
+      return { elements: [...prevState.elements, card] };
     });
   }
 
   render() {
-    let cards = [];
+    let elements = [];
     let menus = [];
 
-    for (let x = 0; x < this.state.cardCount; x++) {
+    for (let x = 0; x < this.state.elements.length; x++) {
       menus.push(this.createMenu(x));
-      cards.push(this.renderCard(x));
+      elements.push(this.renderCard(this.state.elements[x].type, x));
     }
-
     return (
       <div className="App">
         {this.state.showSidebar && (
@@ -211,11 +221,19 @@ class App extends Component {
             </span>
             <button
               onClick={() => {
-                this.createCard(this.state.cardCount);
+                this.createCard("card", this.state.elements.length);
               }}
               className="bg-blue hover:bg-blue-light text-white font-bold py-2 px-4 border-b-4 border-blue-dark hover:border-blue rounded"
             >
               Create card
+            </button>
+            <button
+              onClick={() => {
+                this.createCard("circle", this.state.elements.length);
+              }}
+              className="bg-blue hover:bg-blue-light text-white font-bold py-2 px-4 border-b-4 border-blue-dark hover:border-blue rounded"
+            >
+              Create circle
             </button>
             <br />
             {menus}
@@ -233,7 +251,7 @@ class App extends Component {
             </div>
             <div className="flex-1 bg-white border border-grey-light rounded mr-4" />
           </div>
-          {cards}
+          {elements}
         </div>
       </div>
     );

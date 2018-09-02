@@ -13,13 +13,14 @@
   grid-row: 1;
   grid-column: 1/-1;
   z-index: 1;
+  height: 50px;
 }
 .canvas {
   grid-column: 3;
   grid-row: 1/-1;
-  display: inline-grid;
+  /* display: inline-grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(12, 1fr);
+  grid-template-rows: repeat(12, 1fr); */
   /* grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-template-rows: repeat(12, auto); */
 }
