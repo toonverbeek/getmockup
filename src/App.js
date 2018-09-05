@@ -208,7 +208,7 @@ class App extends Component {
     return (
       <div className="App">
         {this.state.showSidebar && (
-          <div className="sidebar p-5 bg-white">
+          <div className="sidebar  p-5 bg-white">
             <span
               className="cursor-pointer block text-3xl text-right text-right"
               onClick={() =>
@@ -239,9 +239,10 @@ class App extends Component {
             {menus}
           </div>
         )}
+
         <div
           style={{ gridColumn: this.state.showSidebar ? "2/-1" : "1/-1" }}
-          className="canvas bg-grey-darkest"
+          className="canvas p-b-2 flex bg-grey-darkest"
         >
           <div className="menu-bar bg-grey-lighter flex px-4 py-3">
             <div className="mr-6">
@@ -251,7 +252,7 @@ class App extends Component {
             </div>
             <div className="flex-1 bg-white border border-grey-light rounded mr-4" />
           </div>
-          {elements}
+          <div>{elements}</div>
         </div>
       </div>
     );

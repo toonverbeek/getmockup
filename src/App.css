@@ -2,7 +2,11 @@
   display: grid;
   grid-template-columns: 350px 1fr;
   grid-template-rows: 150px 1fr;
-  min-height: 100vh;
+  height: 100vh;
+}
+
+.App * {
+  box-sizing: border-box;
 }
 
 .sidebar {
@@ -11,13 +15,15 @@
 }
 .menu-bar {
   grid-row: 1;
-  grid-column: 1/-1;
   z-index: 1;
-  height: 50px;
 }
+
 .canvas {
   grid-column: 3;
   grid-row: 1/-1;
+  grid-column: 2 / -1;
+  display: inline-grid;
+  grid-template-rows: 50px 1fr;
   /* display: inline-grid;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(12, 1fr); */

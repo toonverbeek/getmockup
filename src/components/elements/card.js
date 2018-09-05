@@ -29,20 +29,16 @@ class CardElement extends Component {
           });
         }}
         bounds="parent"
-        resizeGrid={[50, 50]}
-        dragGrid={[50, 50]}
-        className={`${
-          this.props.selected ? "border-2 border-black resize" : ""
-        } bg-${this.props.color}-light bg-grey-lightest cursor-pointer  ${this
-          .props.circle && "rounded-full"}`}
+        resizeGrid={[25, 25]}
+        className={`${this.props.selected ? "border-2 border-black" : ""} bg-${
+          this.props.color
+        } cursor-pointer  ${this.props.circle && "rounded-full"}`}
         onClick={this.props.onClick}
         style={{
           width: this.state.width + "px",
           height: this.state.height + "px"
         }}
-      >
-        {/* <Rnd className="react-resizable-handle bg-red w-4 h-4" /> */}
-      </Rnd>
+      />
     );
   }
 }
