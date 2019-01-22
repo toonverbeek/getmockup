@@ -1,3 +1,6 @@
+# About Getmockup
+This repo was a minor sideproject to build a simple tool that allows people to build UI mockups easily.
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
